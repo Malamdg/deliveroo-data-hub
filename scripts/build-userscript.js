@@ -8,8 +8,8 @@ const userscriptHeader = `// ==UserScript==
 // @version      0.1.0
 // @description  Retrieve and export your Deliveroo order history as structured JSON.
 // @author       MalaM
-// @match        https://deliveroo.fr/*
-// @match        https://www.deliveroo.fr/*
+// @match        https://deliveroo.*/*
+// @match        https://www.deliveroo.*/*
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==
