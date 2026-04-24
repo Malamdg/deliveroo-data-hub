@@ -2,7 +2,7 @@
   <header class="ddh-header">
     <div>
       <strong>Deliveroo Data Hub</strong>
-      <span class="ddh-status">Idle</span>
+      <span class="ddh-status" data-ddh-status>Idle</span>
     </div>
 
     <button class="ddh-close" type="button" data-ddh-close>×</button>
@@ -22,7 +22,9 @@
     <div class="ddh-actions">
       <button type="button" data-ddh-start>Start</button>
       <button type="button" data-ddh-pause>Pause</button>
+      <button type="button" data-ddh-resume>Resume</button>
       <button type="button" data-ddh-stop>Stop</button>
+      <button type="button" data-ddh-reset>Reset</button>
       <button type="button" data-ddh-export>Export JSON</button>
     </div>
 
@@ -30,6 +32,10 @@
       <div>Commandes collectées : <strong data-ddh-collected-count>0</strong></div>
       <div>Commandes retenues : <strong data-ddh-retained-count>0</strong></div>
       <div>Total dépensé : <strong data-ddh-total-spent>0 €</strong></div>
+      <div>Réponses capturées : <strong data-ddh-responses-captured>0</strong></div>
+      <div>Clics voir plus : <strong data-ddh-view-more-clicks>0</strong></div>
+      <div>Plus récente : <strong data-ddh-newest-date>N/A</strong></div>
+      <div>Plus ancienne : <strong data-ddh-oldest-date>N/A</strong></div>
     </div>
   </main>
 </section>
