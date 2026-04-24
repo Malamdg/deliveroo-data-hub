@@ -3,7 +3,7 @@ import {
   isLowerBoundReached,
   isOrderInsideDateRange
 } from "./dateRange.js";
-import { createExportPayload, downloadJson } from "./exporter.js";
+import { createExportPayload, downloadJson } from "./exports.js";
 
 export function createScraperEngine({
   store,
@@ -60,76 +60,82 @@ export function createScraperEngine({
   }
 
   async function start({ startDateValue, endDateValue }) {
-    runtime.dateRange = createInclusiveDateRange(startDateValue, endDateValue);
-    runtime.status = "running";
-    runtime.startedAt = new Date().toISOString();
-    runtime.isPaused = false;
-    runtime.isStopped = false;
-    runtime.responsesCaptured = 0;
-    runtime.viewMoreClicks = 0;
-    runtime.emptyRounds = 0;
+    try {
+        runtime.dateRange = createInclusiveDateRange(startDateValue, endDateValue);
+        runtime.status = "running";
+        runtime.startedAt = new Date().toISOString();
+        runtime.isPaused = false;
+        runtime.isStopped = false;
+        runtime.responsesCaptured = 0;
+        runtime.viewMoreClicks = 0;
+        runtime.emptyRounds = 0;
 
-    store.clear();
-    networkInterceptor.install();
+        store.clear();
+        networkInterceptor.install();
 
-    const initialOrders = domInitialExtractor.extractOrders?.() ?? [];
-    if (initialOrders.length > 0) {
-      ingestOrders(initialOrders);
-    }
-
-    updateDashboard();
-
-    while (!runtime.isStopped) {
-      if (runtime.isPaused) {
-        await sleep(500);
-        continue;
-      }
-
-      const orders = store.getOrders();
-
-      if (isLowerBoundReached(orders, runtime.dateRange)) {
-        runtime.status = "finished";
-        updateDashboard();
-        break;
-      }
-
-      const button = getViewMoreButton();
-
-      if (!button || button.disabled) {
-        runtime.emptyRounds += 1;
-
-        if (runtime.emptyRounds >= 5) {
-          runtime.status = "finished";
-          updateDashboard();
-          break;
+        const initialOrders = domInitialExtractor.extractOrders?.() ?? [];
+        if (initialOrders.length > 0) {
+        ingestOrders(initialOrders);
         }
 
-        await sleep(1000);
-        continue;
-      }
-
-      button.scrollIntoView({ block: "center" });
-      await sleep(300);
-      button.click();
-
-      runtime.viewMoreClicks += 1;
-      updateDashboard();
-
-      await sleep(2200);
-
-      const newOrders = store.getOrders();
-
-      if (newOrders.length === orders.length) {
-        runtime.emptyRounds += 1;
-      } else {
-        runtime.emptyRounds = 0;
-      }
-
-      if (runtime.emptyRounds >= 5) {
-        runtime.status = "finished";
         updateDashboard();
-        break;
-      }
+
+        while (!runtime.isStopped) {
+            if (runtime.isPaused) {
+                await sleep(500);
+                continue;
+            }
+
+            const orders = store.getOrders();
+
+            if (isLowerBoundReached(orders, runtime.dateRange)) {
+                runtime.status = "finished";
+                updateDashboard();
+                break;
+            }
+
+            const button = getViewMoreButton();
+
+            if (!button || button.disabled) {
+                runtime.emptyRounds += 1;
+
+                if (runtime.emptyRounds >= 5) {
+                runtime.status = "finished";
+                updateDashboard();
+                break;
+                }
+
+                await sleep(1000);
+                continue;
+            }
+
+            button.scrollIntoView({ block: "center" });
+            await sleep(300);
+            button.click();
+
+            runtime.viewMoreClicks += 1;
+            updateDashboard();
+
+            await sleep(2200);
+
+            const newOrders = store.getOrders();
+
+            if (newOrders.length === orders.length) {
+                runtime.emptyRounds += 1;
+            } else {
+                runtime.emptyRounds = 0;
+            }
+
+            if (runtime.emptyRounds >= 5) {
+                runtime.status = "finished";
+                updateDashboard();
+                break;
+            }
+        }
+    } catch (error) {
+        runtime.status = "error";
+        dashboard.showError?.(error.message);
+        updateDashboard();
     }
   }
 

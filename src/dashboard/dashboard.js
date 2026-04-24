@@ -33,16 +33,84 @@ export function createDashboard() {
   function updateStats(stats) {
     if (!root) return;
 
-    const collectedCountElement = root.querySelector("[data-ddh-collected-count]");
+    const map = {
+      "[data-ddh-status]": stats.status,
+      "[data-ddh-collected-count]": stats.collectedCount,
+      "[data-ddh-retained-count]": stats.retainedCount,
+      "[data-ddh-total-spent]": `${stats.totalSpent ?? 0} €`,
+      "[data-ddh-responses-captured]": stats.responsesCaptured,
+      "[data-ddh-view-more-clicks]": stats.viewMoreClicks,
+      "[data-ddh-oldest-date]": stats.oldestDate,
+      "[data-ddh-newest-date]": stats.newestDate
+    };
 
-    if (collectedCountElement && typeof stats.collectedCount === "number") {
-      collectedCountElement.textContent = String(stats.collectedCount);
+    for (const [selector, value] of Object.entries(map)) {
+      const element = root.querySelector(selector);
+      if (element && value !== undefined) {
+        element.textContent = String(value);
+      }
+    }
+
+    updateControls(stats.status);
+  }
+
+  function updateControls(status) {
+    if (!root) return;
+
+    const start = root.querySelector("[data-ddh-start]");
+    const pause = root.querySelector("[data-ddh-pause]");
+    const resume = root.querySelector("[data-ddh-resume]");
+    const stop = root.querySelector("[data-ddh-stop]");
+    const exportJson = root.querySelector("[data-ddh-export]");
+
+    const isRunning = status === "running";
+    const isPaused = status === "paused";
+
+    if (start) start.disabled = isRunning || isPaused;
+    if (pause) pause.disabled = !isRunning;
+    if (resume) resume.disabled = !isPaused;
+    if (stop) stop.disabled = !isRunning && !isPaused;
+    if (exportJson) exportJson.disabled = isRunning;
+  }
+
+  function showError(message) {
+    if (!root) return;
+
+    const element = root.querySelector("[data-ddh-error]");
+    if (!element) return;
+
+    if (!message) {
+      element.hidden = true;
+      element.textContent = "";
+      return;
+    }
+
+    element.hidden = false;
+    element.textContent = message;
+  }
+
+  function addLog(entry) {
+    if (!root) return;
+
+    const list = root.querySelector("[data-ddh-logs]");
+    if (!list) return;
+
+    const item = document.createElement("div");
+    item.className = `ddh-log-entry ddh-log-entry--${entry.level}`;
+    item.textContent = `[${new Date(entry.createdAt).toLocaleTimeString()}] ${entry.message}`;
+
+    list.prepend(item);
+
+    while (list.children.length > 80) {
+      list.lastElementChild?.remove();
     }
   }
 
   return {
     mount,
     destroy,
-    updateStats
+    updateStats,
+    showError,
+    addLog
   };
 }

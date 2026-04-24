@@ -4,17 +4,20 @@
 
 - [x] Project structure
 - [x] Userscript build pipeline
-- [x] Dashboard foundation
+- [x] Dashboard overlay
 - [x] External dashboard HTML and CSS
 - [x] Network interception
 - [x] Orders extraction from network responses
 - [x] Order store and deduplication
-- [x] Date range handling
-- [ ] Initial page extraction
-- [ ] Automated "view more" collection
-- [ ] JSON export
-- [ ] Basic dashboard stats
+- [x] Inclusive date range filtering
+- [x] Initial DOM extraction fallback
+- [x] Automated "view more" collection
+- [x] JSON export
+- [x] Basic dashboard stats
+- [x] UI logs
+- [x] Error feedback
 - [ ] Manual test on Deliveroo customer orders page
+- [ ] Release notes for v0.1
 
 ## v0.2 - API direct experimental
 

@@ -84,3 +84,46 @@
   background: #f9fafb;
   font-size: 13px;
 }
+
+.ddh-error {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 600;
+}
+
+.ddh-logs {
+  display: grid;
+  gap: 6px;
+  padding: 0 16px 16px;
+  font-size: 12px;
+}
+
+.ddh-log-list {
+  max-height: 160px;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 8px;
+  background: #111827;
+  color: #f9fafb;
+}
+
+.ddh-log-entry {
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.ddh-log-entry--warn {
+  color: #fbbf24;
+}
+
+.ddh-log-entry--error {
+  color: #f87171;
+}
+
+.ddh-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

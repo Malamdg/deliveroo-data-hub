@@ -1,6 +1,9 @@
 import { createDashboard } from "../dashboard/dashboard.js";
 import { createNetworkInterceptor } from "../adapters/networkInterceptor.js";
 import { createOrderStore } from "../core/orderStore.js";
+import { createScraperEngine } from "../core/scraperEngine.js";
+import { createDomInitialExtractor } from "../adapters/domInitialExtractor.js";
+import { createLogger } from "../core/logger.js";
 
 export function createUserscriptRunner() {
   return {
@@ -10,41 +13,66 @@ export function createUserscriptRunner() {
       }
 
       const store = createOrderStore();
-
-      const dashboard = createDashboard({
-        getStats() {
-          return {
-            collectedCount: store.totalCount
-          };
+      const dashboard = createDashboard();
+      const logger = createLogger({
+        onLog(entry) {
+          dashboard.addLog?.(entry);
         }
       });
+
+      const domInitialExtractor = createDomInitialExtractor();
+      let scraperEngine = null;
 
       const networkInterceptor = createNetworkInterceptor({
-        onOrdersCaptured({ orders, transport }) {
-          const result = store.addOrders(orders);
-
-          console.log("[DDH] Orders captured", {
-            transport,
-            received: orders.length,
-            added: result.addedCount,
-            total: result.totalCount
-          });
-
-          dashboard.updateStats?.({
-            collectedCount: result.totalCount
-          });
+        onOrdersCaptured({ orders }) {
+          scraperEngine?.onNetworkOrdersCaptured(orders);
+          logger.info(`Captured ${orders.length} orders from network`);
         },
         onLog(entry) {
-          console.log("[DDH]", entry.message, entry.payload ?? "");
+          logger.info(entry.message, entry.payload);
         }
       });
 
-      networkInterceptor.install();
+      scraperEngine = createScraperEngine({
+        store,
+        networkInterceptor,
+        domInitialExtractor,
+        dashboard
+      });
+
+      dashboard.mount({
+        onStart({ startDateValue, endDateValue }) {
+          logger.info("Scraping started");
+          scraperEngine.start({ startDateValue, endDateValue });
+        },
+        onPause() {
+          logger.info("Scraping paused");
+          scraperEngine.pause();
+        },
+        onResume() {
+          logger.info("Scraping resumed");
+          scraperEngine.resume();
+        },
+        onStop() {
+          logger.info("Scraping stopped");
+          scraperEngine.stop();
+        },
+        onReset() {
+          logger.info("Scraping reset");
+          scraperEngine.reset();
+        },
+        onExportJson() {
+          logger.info("JSON export requested");
+          scraperEngine.exportJson();
+        }
+      });
 
       window.__deliverooDataHub = {
         store,
         dashboard,
+        logger,
         networkInterceptor,
+        scraperEngine,
         destroy() {
           networkInterceptor.uninstall();
           dashboard.destroy();
@@ -52,7 +80,7 @@ export function createUserscriptRunner() {
         }
       };
 
-      dashboard.mount();
+      logger.info("Deliveroo Data Hub initialized");
     }
   };
 }
