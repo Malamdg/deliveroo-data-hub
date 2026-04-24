@@ -1,0 +1,14 @@
+{
+  "name": "deliveroo-data-hub",
+  "version": "0.1.0",
+  "description": "Extract, analyze, and export your Deliveroo order history directly from your browser.\n A client-side tool to retrieve and export your Deliveroo order history without relying on external APIs.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-userscript.js",
+    "watch": "node scripts/build-userscript.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

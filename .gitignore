@@ -1,0 +1,5 @@
+node_modules
+dist/*
+!dist/deliveroo-data-hub.user.js
+.env
+.DS_Store

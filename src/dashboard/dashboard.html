@@ -1,0 +1,35 @@
+<section class="ddh-panel">
+  <header class="ddh-header">
+    <div>
+      <strong>Deliveroo Data Hub</strong>
+      <span class="ddh-status">Idle</span>
+    </div>
+
+    <button class="ddh-close" type="button" data-ddh-close>×</button>
+  </header>
+
+  <main class="ddh-body">
+    <label>
+      Date de début
+      <input type="date" class="ddh-input" data-ddh-start-date />
+    </label>
+
+    <label>
+      Date de fin
+      <input type="date" class="ddh-input" data-ddh-end-date />
+    </label>
+
+    <div class="ddh-actions">
+      <button type="button" data-ddh-start>Start</button>
+      <button type="button" data-ddh-pause>Pause</button>
+      <button type="button" data-ddh-stop>Stop</button>
+      <button type="button" data-ddh-export>Export JSON</button>
+    </div>
+
+    <div class="ddh-stats">
+      <div>Commandes collectées : <strong data-ddh-collected-count>0</strong></div>
+      <div>Commandes retenues : <strong data-ddh-retained-count>0</strong></div>
+      <div>Total dépensé : <strong data-ddh-total-spent>0 €</strong></div>
+    </div>
+  </main>
+</section>

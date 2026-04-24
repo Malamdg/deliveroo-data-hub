@@ -1,0 +1,86 @@
+#deliveroo-data-hub {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 999999;
+  font-family: Arial, sans-serif;
+}
+
+.ddh-panel {
+  width: 360px;
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.ddh-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #00ccbc;
+  color: #ffffff;
+}
+
+.ddh-status {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  font-size: 12px;
+}
+
+.ddh-close {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.ddh-body {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.ddh-body label {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ddh-input {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.ddh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ddh-actions button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #6d28d9;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.ddh-stats {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f9fafb;
+  font-size: 13px;
+}
