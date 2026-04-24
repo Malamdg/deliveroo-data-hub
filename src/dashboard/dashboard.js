@@ -30,8 +30,19 @@ export function createDashboard() {
     root = null;
   }
 
+  function updateStats(stats) {
+    if (!root) return;
+
+    const collectedCountElement = root.querySelector("[data-ddh-collected-count]");
+
+    if (collectedCountElement && typeof stats.collectedCount === "number") {
+      collectedCountElement.textContent = String(stats.collectedCount);
+    }
+  }
+
   return {
     mount,
-    destroy
+    destroy,
+    updateStats
   };
 }
