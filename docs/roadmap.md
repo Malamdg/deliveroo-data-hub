@@ -16,14 +16,35 @@
 - [x] Basic dashboard stats
 - [x] UI logs
 - [x] Error feedback
-- [ ] Manual test on Deliveroo customer orders page
-- [ ] Release notes for v0.1
+- [x] Manual test on Deliveroo customer orders page
+- [x] Release notes for v0.1
 
-## v0.2 - API direct experimental
+## v0.2.0 - Export & Reliability
 
-- [ ] Capture API request recipe
-- [ ] Add experimental direct API mode
-- [ ] Add fallback to DOM + Network mode
+### Goal
+
+Improve data export usability and make the scraping flow more reliable before adding advanced insights.
+
+### Scope
+
+- [ ] Add CSV export
+- [ ] Add export format selector (JSON / CSV)
+- [ ] Improve initial DOM extraction reliability
+- [ ] Improve "view more" button detection
+- [ ] Add empty-state handling when no orders are found
+- [ ] Improve dashboard UX (collapsible logs + clearer status)
+- [ ] Add safer export error handling
+- [ ] Add installation guide for Tampermonkey
+- [ ] Add basic usage guide
+- [ ] Add manual smoke-test checklist before release
+
+### Out of scope
+
+- API direct mode
+- Advanced analytics
+- Charts
+- Configurable dashboard widgets
+- Browser extension packaging
 
 ## v0.3 - Data insights
 

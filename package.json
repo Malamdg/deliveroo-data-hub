@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-userscript.js",
-    "watch": "node scripts/build-userscript.js --watch"
+    "dev": "node scripts/build-userscript.js --watch",
+    "release": "npm run build"
   },
   "devDependencies": {
     "esbuild": "^0.25.0"
