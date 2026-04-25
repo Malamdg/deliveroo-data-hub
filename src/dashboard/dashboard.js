@@ -4,7 +4,7 @@ import dashboardStyles from "./dashboard.css";
 export function createDashboard() {
   let root = null;
 
-  function mount() {
+  function mount(callbacks = {}) {
     injectStyles();
 
     root = document.createElement("div");
@@ -14,6 +14,33 @@ export function createDashboard() {
     document.body.appendChild(root);
 
     root.querySelector("[data-ddh-close]").addEventListener("click", destroy);
+
+    root.querySelector("[data-ddh-start]").addEventListener("click", () => {
+      callbacks.onStart?.({
+        startDateValue: root.querySelector("[data-ddh-start-date]").value,
+        endDateValue: root.querySelector("[data-ddh-end-date]").value
+      });
+    });
+
+    root.querySelector("[data-ddh-pause]").addEventListener("click", () => {
+      callbacks.onPause?.();
+    });
+
+    root.querySelector("[data-ddh-resume]")?.addEventListener("click", () => {
+      callbacks.onResume?.();
+    });
+
+    root.querySelector("[data-ddh-stop]").addEventListener("click", () => {
+      callbacks.onStop?.();
+    });
+
+    root.querySelector("[data-ddh-reset]")?.addEventListener("click", () => {
+      callbacks.onReset?.();
+    });
+
+    root.querySelector("[data-ddh-export]").addEventListener("click", () => {
+      callbacks.onExportJson?.();
+    });
   }
 
   function injectStyles() {

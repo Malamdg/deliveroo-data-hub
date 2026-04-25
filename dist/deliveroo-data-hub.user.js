@@ -4,8 +4,8 @@
 // @version      0.1.0
 // @description  Retrieve and export your Deliveroo order history as structured JSON.
 // @author       MalaM
-// @match        https://deliveroo.*/*
-// @match        https://www.deliveroo.*/*
+// @include      https://deliveroo.tld/*
+// @include      https://www.deliveroo.tld/*
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==
@@ -21,13 +21,34 @@
   // src/dashboard/dashboard.js
   function createDashboard() {
     let root = null;
-    function mount() {
+    function mount(callbacks = {}) {
       injectStyles();
       root = document.createElement("div");
       root.id = "deliveroo-data-hub";
       root.innerHTML = dashboard_default;
       document.body.appendChild(root);
       root.querySelector("[data-ddh-close]").addEventListener("click", destroy);
+      root.querySelector("[data-ddh-start]").addEventListener("click", () => {
+        callbacks.onStart?.({
+          startDateValue: root.querySelector("[data-ddh-start-date]").value,
+          endDateValue: root.querySelector("[data-ddh-end-date]").value
+        });
+      });
+      root.querySelector("[data-ddh-pause]").addEventListener("click", () => {
+        callbacks.onPause?.();
+      });
+      root.querySelector("[data-ddh-resume]")?.addEventListener("click", () => {
+        callbacks.onResume?.();
+      });
+      root.querySelector("[data-ddh-stop]").addEventListener("click", () => {
+        callbacks.onStop?.();
+      });
+      root.querySelector("[data-ddh-reset]")?.addEventListener("click", () => {
+        callbacks.onReset?.();
+      });
+      root.querySelector("[data-ddh-export]").addEventListener("click", () => {
+        callbacks.onExportJson?.();
+      });
     }
     function injectStyles() {
       if (document.getElementById("deliveroo-data-hub-styles")) return;
