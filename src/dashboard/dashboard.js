@@ -41,6 +41,17 @@ export function createDashboard() {
     root.querySelector("[data-ddh-export]").addEventListener("click", () => {
       callbacks.onExportJson?.();
     });
+
+    const logsToggleButton = root.querySelector("[data-ddh-logs-toggle]");
+    const logsContainer = root.querySelector("[data-ddh-logs]");
+
+    logsToggleButton?.addEventListener("click", () => {
+      if (!logsContainer) return;
+
+      const isHidden = logsContainer.hidden;
+      logsContainer.hidden = !isHidden;
+      logsToggleButton.textContent = isHidden ? "Hide logs" : "Show logs";
+    });
   }
 
   function injectStyles() {

@@ -101,6 +101,17 @@
   font-size: 12px;
 }
 
+.ddh-logs-toggle {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #f9fafb;
+  color: #374151;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+}
+
 .ddh-log-list {
   max-height: 160px;
   overflow: auto;
