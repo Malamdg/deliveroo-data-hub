@@ -25,7 +25,14 @@
       <button type="button" data-ddh-resume>Resume</button>
       <button type="button" data-ddh-stop>Stop</button>
       <button type="button" data-ddh-reset>Reset</button>
-      <button type="button" data-ddh-export>Export JSON</button>
+      <label class="ddh-export-format">
+        Format d’export
+        <select class="ddh-input" data-ddh-export-format>
+          <option value="json">JSON</option>
+          <option value="csv">CSV</option>
+        </select>
+      </label>
+      <button type="button" data-ddh-export>Export</button>
     </div>
 
     <div class="ddh-stats">

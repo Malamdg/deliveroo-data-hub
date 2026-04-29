@@ -13,7 +13,7 @@
 
 (() => {
   // src/dashboard/dashboard.html
-  var dashboard_default = '<section class="ddh-panel">\n  <header class="ddh-header">\n    <div>\n      <strong>Deliveroo Data Hub</strong>\n      <span class="ddh-status" data-ddh-status>Idle</span>\n    </div>\n\n    <button class="ddh-close" type="button" data-ddh-close>\xD7</button>\n  </header>\n\n  <main class="ddh-body">\n    <label>\n      Date de d\xE9but\n      <input type="date" class="ddh-input" data-ddh-start-date />\n    </label>\n\n    <label>\n      Date de fin\n      <input type="date" class="ddh-input" data-ddh-end-date />\n    </label>\n\n    <div class="ddh-actions">\n      <button type="button" data-ddh-start>Start</button>\n      <button type="button" data-ddh-pause>Pause</button>\n      <button type="button" data-ddh-resume>Resume</button>\n      <button type="button" data-ddh-stop>Stop</button>\n      <button type="button" data-ddh-reset>Reset</button>\n      <button type="button" data-ddh-export>Export JSON</button>\n    </div>\n\n    <div class="ddh-stats">\n      <div>Commandes collect\xE9es : <strong data-ddh-collected-count>0</strong></div>\n      <div>Commandes retenues : <strong data-ddh-retained-count>0</strong></div>\n      <div>Total d\xE9pens\xE9 : <strong data-ddh-total-spent>0 \u20AC</strong></div>\n      <div>R\xE9ponses captur\xE9es : <strong data-ddh-responses-captured>0</strong></div>\n      <div>Clics voir plus : <strong data-ddh-view-more-clicks>0</strong></div>\n      <div>Plus r\xE9cente : <strong data-ddh-newest-date>N/A</strong></div>\n      <div>Plus ancienne : <strong data-ddh-oldest-date>N/A</strong></div>\n      <div class="ddh-error" data-ddh-error hidden></div>\n    </div>\n    <section class="ddh-logs">\n      <button type="button" class="ddh-logs-toggle" data-ddh-logs-toggle>\n        Show logs\n      </button>\n\n      <div class="ddh-log-list" data-ddh-logs hidden></div>\n    </section>\n  </main>\n</section>';
+  var dashboard_default = '<section class="ddh-panel">\n  <header class="ddh-header">\n    <div>\n      <strong>Deliveroo Data Hub</strong>\n      <span class="ddh-status" data-ddh-status>Idle</span>\n    </div>\n\n    <button class="ddh-close" type="button" data-ddh-close>\xD7</button>\n  </header>\n\n  <main class="ddh-body">\n    <label>\n      Date de d\xE9but\n      <input type="date" class="ddh-input" data-ddh-start-date />\n    </label>\n\n    <label>\n      Date de fin\n      <input type="date" class="ddh-input" data-ddh-end-date />\n    </label>\n\n    <div class="ddh-actions">\n      <button type="button" data-ddh-start>Start</button>\n      <button type="button" data-ddh-pause>Pause</button>\n      <button type="button" data-ddh-resume>Resume</button>\n      <button type="button" data-ddh-stop>Stop</button>\n      <button type="button" data-ddh-reset>Reset</button>\n      <label class="ddh-export-format">\n        Format d\u2019export\n        <select class="ddh-input" data-ddh-export-format>\n          <option value="json">JSON</option>\n          <option value="csv">CSV</option>\n        </select>\n      </label>\n      <button type="button" data-ddh-export>Export</button>\n    </div>\n\n    <div class="ddh-stats">\n      <div>Commandes collect\xE9es : <strong data-ddh-collected-count>0</strong></div>\n      <div>Commandes retenues : <strong data-ddh-retained-count>0</strong></div>\n      <div>Total d\xE9pens\xE9 : <strong data-ddh-total-spent>0 \u20AC</strong></div>\n      <div>R\xE9ponses captur\xE9es : <strong data-ddh-responses-captured>0</strong></div>\n      <div>Clics voir plus : <strong data-ddh-view-more-clicks>0</strong></div>\n      <div>Plus r\xE9cente : <strong data-ddh-newest-date>N/A</strong></div>\n      <div>Plus ancienne : <strong data-ddh-oldest-date>N/A</strong></div>\n      <div class="ddh-error" data-ddh-error hidden></div>\n    </div>\n    <section class="ddh-logs">\n      <button type="button" class="ddh-logs-toggle" data-ddh-logs-toggle>\n        Show logs\n      </button>\n\n      <div class="ddh-log-list" data-ddh-logs hidden></div>\n    </section>\n  </main>\n</section>';
 
   // src/dashboard/dashboard.css
   var dashboard_default2 = "#deliveroo-data-hub {\n  position: fixed;\n  top: 16px;\n  right: 16px;\n  z-index: 999999;\n  font-family: Arial, sans-serif;\n}\n\n.ddh-panel {\n  width: 360px;\n  background: #ffffff;\n  color: #1f2937;\n  border: 1px solid #e5e7eb;\n  border-radius: 14px;\n  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);\n  overflow: hidden;\n}\n\n.ddh-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 14px 16px;\n  background: #00ccbc;\n  color: #ffffff;\n}\n\n.ddh-status {\n  margin-left: 8px;\n  padding: 2px 8px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.22);\n  font-size: 12px;\n}\n\n.ddh-close {\n  border: none;\n  background: transparent;\n  color: white;\n  font-size: 24px;\n  cursor: pointer;\n}\n\n.ddh-body {\n  display: grid;\n  gap: 12px;\n  padding: 16px;\n}\n\n.ddh-body label {\n  display: grid;\n  gap: 4px;\n  font-size: 13px;\n  font-weight: 600;\n}\n\n.ddh-input {\n  padding: 8px;\n  border: 1px solid #d1d5db;\n  border-radius: 8px;\n}\n\n.ddh-actions {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n}\n\n.ddh-actions button {\n  border: none;\n  border-radius: 8px;\n  padding: 8px 10px;\n  background: #6d28d9;\n  color: white;\n  cursor: pointer;\n  font-weight: 600;\n}\n\n.ddh-stats {\n  display: grid;\n  gap: 6px;\n  padding: 10px;\n  border-radius: 10px;\n  background: #f9fafb;\n  font-size: 13px;\n}\n\n.ddh-error {\n  margin-top: 8px;\n  padding: 8px;\n  border-radius: 8px;\n  background: #fee2e2;\n  color: #991b1b;\n  font-weight: 600;\n}\n\n.ddh-logs {\n  display: grid;\n  gap: 6px;\n  padding: 0 16px 16px;\n  font-size: 12px;\n}\n\n.ddh-logs-toggle {\n  border: 1px solid #d1d5db;\n  border-radius: 8px;\n  padding: 8px 10px;\n  background: #f9fafb;\n  color: #374151;\n  cursor: pointer;\n  font-weight: 600;\n  text-align: left;\n}\n\n.ddh-log-list {\n  max-height: 160px;\n  overflow: auto;\n  padding: 8px;\n  border-radius: 8px;\n  background: #111827;\n  color: #f9fafb;\n}\n\n.ddh-log-entry {\n  margin-bottom: 4px;\n  opacity: 0.9;\n}\n\n.ddh-log-entry--warn {\n  color: #fbbf24;\n}\n\n.ddh-log-entry--error {\n  color: #f87171;\n}\n\n.ddh-actions button:disabled {\n  opacity: 0.45;\n  cursor: not-allowed;\n}";
@@ -47,11 +47,9 @@
         callbacks.onReset?.();
       });
       root.querySelector("[data-ddh-export]").addEventListener("click", () => {
-        if (format === "csv") {
-          callbacks.onExportCsv?.();
-        } else {
-          callbacks.onExportJson?.();
-        }
+        callbacks.onExport?.({
+          format: root.querySelector("[data-ddh-export-format]")?.value || "json"
+        });
       });
       const logsToggleButton = root.querySelector("[data-ddh-logs-toggle]");
       const logsContainer = root.querySelector("[data-ddh-logs]");
@@ -362,7 +360,53 @@
     return oldestDate <= dateRange.start;
   }
 
-  // src/core/exports.js
+  // src/core/csvExporter.js
+  function convertOrdersToCsv(orders) {
+    if (!orders || !orders.length) return "";
+    const headers = [
+      "order_id",
+      "date",
+      "restaurant_name",
+      "total_amount",
+      "currency",
+      "status",
+      "items_count"
+    ];
+    const rows = orders.map((order) => {
+      return [
+        order.id,
+        formatDate(order.submitted_at),
+        sanitize(order.restaurant?.name),
+        order.total?.amount,
+        order.total?.currency_code,
+        order.status,
+        order.items?.length || 0
+      ];
+    });
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) => row.map(escapeCSV).join(","))
+    ].join("\n");
+    return csvContent;
+  }
+  function formatDate(date) {
+    const d = new Date(date);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toISOString();
+  }
+  function sanitize(value) {
+    if (!value) return "";
+    return String(value).trim();
+  }
+  function escapeCSV(value) {
+    const str = String(value ?? "");
+    if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  }
+
+  // src/core/exporter.js
   function createExportPayload({ orders, dateRange, runtime }) {
     const retainedOrders = orders.filter(
       (order) => isOrderInsideDateRange(order, dateRange)
@@ -397,6 +441,17 @@
   function downloadJson(payload, filename = "deliveroo-orders.json") {
     const blob = new Blob([JSON.stringify(payload, null, 2)], {
       type: "application/json"
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+  function downloadCsv(csvContent, filename = "deliveroo-orders.csv") {
+    const blob = new Blob(["\uFEFF" + csvContent], {
+      type: "text/csv;charset=utf-8;"
     });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -544,15 +599,21 @@
       runtime.emptyRounds = 0;
       updateDashboard();
     }
-    function exportJson() {
+    function exportData({ format = "json" } = {}) {
       if (!runtime.dateRange) {
         throw new Error("Date range is required before exporting.");
       }
+      const orders = store.getOrders();
       const payload = createExportPayload({
-        orders: store.getOrders(),
+        orders,
         dateRange: runtime.dateRange,
         runtime
       });
+      if (format === "csv") {
+        const csv = convertOrdersToCsv(payload.orders);
+        downloadCsv(csv, "deliveroo-data-hub-orders.csv");
+        return;
+      }
       downloadJson(payload, "deliveroo-data-hub-orders.json");
     }
     return {
@@ -561,7 +622,7 @@
       resume,
       stop,
       reset,
-      exportJson,
+      exportData,
       onNetworkOrdersCaptured,
       updateDashboard
     };
@@ -712,9 +773,9 @@
             logger.info("Scraping reset");
             scraperEngine.reset();
           },
-          onExportJson() {
-            logger.info("JSON export requested");
-            scraperEngine.exportJson();
+          onExport({ format }) {
+            logger.info(`Export requested: ${format}`);
+            scraperEngine.exportData({ format });
           }
         });
         window.__deliverooDataHub = {

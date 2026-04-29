@@ -1,4 +1,5 @@
 import { isOrderInsideDateRange } from "./dateRange.js";
+import { convertOrdersToCsv } from "./csvExporter.js";
 
 export function createExportPayload({ orders, dateRange, runtime }) {
   const retainedOrders = orders.filter(order =>
@@ -40,6 +41,21 @@ export function createExportPayload({ orders, dateRange, runtime }) {
 export function downloadJson(payload, filename = "deliveroo-orders.json") {
   const blob = new Blob([JSON.stringify(payload, null, 2)], {
     type: "application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = filename;
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+export function downloadCsv(csvContent, filename = "deliveroo-orders.csv") {
+  const blob = new Blob(["\uFEFF" + csvContent], {
+    type: "text/csv;charset=utf-8;"
   });
 
   const url = URL.createObjectURL(blob);

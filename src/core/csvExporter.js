@@ -1,4 +1,4 @@
-export function convertOrdersToCSV(orders) {
+export function convertOrdersToCsv(orders) {
     if (!orders || !orders.length) return "";
 
     const headers = [
@@ -52,7 +52,7 @@ function escapeCSV(value) {
     return str;
 }
 
-export function downloadCSV(csvContent) {
+export function downloadCsv(csvContent) {
     const blob = new Blob(["\uFEFF" + csvContent], {
         type: "text/csv;charset=utf-8;"
     });

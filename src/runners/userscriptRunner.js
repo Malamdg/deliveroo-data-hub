@@ -61,9 +61,9 @@ export function createUserscriptRunner() {
           logger.info("Scraping reset");
           scraperEngine.reset();
         },
-        onExportJson() {
-          logger.info("JSON export requested");
-          scraperEngine.exportJson();
+        onExport({ format }) {
+          logger.info(`Export requested: ${format}`);
+          scraperEngine.exportData({ format });
         }
       });
 
