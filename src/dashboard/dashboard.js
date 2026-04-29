@@ -39,7 +39,11 @@ export function createDashboard() {
     });
 
     root.querySelector("[data-ddh-export]").addEventListener("click", () => {
-      callbacks.onExportJson?.();
+      if (format === "csv") {
+        callbacks.onExportCsv?.();
+      } else {
+        callbacks.onExportJson?.();
+      }
     });
 
     const logsToggleButton = root.querySelector("[data-ddh-logs-toggle]");
