@@ -372,33 +372,37 @@
       "status",
       "items_count"
     ];
-    const rows = orders.map((order) => {
-      return [
-        order.id,
-        formatDate(order.submitted_at),
-        sanitize(order.restaurant?.name),
-        order.total?.amount,
-        order.total?.currency_code,
-        order.status,
-        order.items?.length || 0
-      ];
-    });
+    const rows = orders.map((order) => [
+      order.id || "",
+      formatDate(order.submitted_at),
+      sanitize(order.restaurant?.name),
+      formatAmount(order.total),
+      order.currency_code || order.currency_symbol || "",
+      order.status || "",
+      order.items?.length || 0
+    ]);
     const csvContent = [
       headers.join(","),
-      ...rows.map((row) => row.map(escapeCSV).join(","))
+      ...rows.map((row) => row.map(escapeCsv).join(","))
     ].join("\n");
     return csvContent;
   }
-  function formatDate(date) {
-    const d = new Date(date);
-    if (Number.isNaN(d.getTime())) return "";
-    return d.toISOString();
+  function formatDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toISOString();
+  }
+  function formatAmount(value) {
+    if (value === null || value === void 0 || value === "") return "";
+    const amount = Number.parseFloat(String(value).replace(",", "."));
+    if (Number.isNaN(amount)) return "";
+    return amount.toFixed(2);
   }
   function sanitize(value) {
-    if (!value) return "";
+    if (value === null || value === void 0) return "";
     return String(value).trim();
   }
-  function escapeCSV(value) {
+  function escapeCsv(value) {
     const str = String(value ?? "");
     if (str.includes(",") || str.includes('"') || str.includes("\n")) {
       return `"${str.replace(/"/g, '""')}"`;
