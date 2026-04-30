@@ -63,7 +63,8 @@ export function createUserscriptRunner() {
         },
         onExport({ format }) {
           logger.info(`Export requested: ${format}`);
-          scraperEngine.exportData({ format });
+
+          scraperEngine.exportData({ format }, logger);
         }
       });
 

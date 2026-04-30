@@ -179,18 +179,29 @@ export function createScraperEngine({
     updateDashboard();
   }
 
-  function exportData({ format = "json" } = {}) {
+  function exportData({ format = "json" } = {}, logger) {
     if (!runtime.dateRange) {
       throw new Error("Date range is required before exporting.");
     }
 
     const orders = store.getOrders();
 
+
+    if (!orders.length) {
+      logger.warn("No orders found");
+      return;
+    }
+
     const payload = createExportPayload({
       orders,
       dateRange: runtime.dateRange,
       runtime
     });
+
+    if (!payload.orders.length) {
+      logger.warn("No orders found for selected date range");
+      return;
+    }
 
     if (format === "csv") {
       const csv = convertOrdersToCsv(payload.orders);
